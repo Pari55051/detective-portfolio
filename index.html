@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detective Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="board-wrapper">
+    <!-- Background -->
+    <!-- <img src="assets/board-bg.png" alt="Murder board background" class="board-bg" /> -->
+
+    <div class="board-wrapper">
+      <img src="assets/board-bg.png" class="board-bg" />
+    
+      <!-- Red strings layer -->
+      <canvas class="red-strings" id="stringCanvas"></canvas>
+    
+      <!-- Clue 1 -->
+      <div class="clue-container clue1">
+        <div class="clue-wrapper">
+          <img src="assets/clue.png" class="clue" />
+          <div class="clue-label">CLUE #1</div>
+        </div>
+      </div>
+        
+    
+      <!-- Clue 2 -->
+      <div class="clue-container clue2">
+        <div class="clue-wrapper">
+          <img src="assets/clue.png" class="clue" />
+          <div class="clue-label">CLUE #2</div>
+        </div>
+      </div>
+      
+    
+      <!-- Lamp -->
+      <img src="assets/lamp.png" class="lamp" />
+    
+      <!-- Typewriter -->
+      <img src="assets/typewriter.png" class="typewriter" onclick="handleTypewriterClick()" />
+    
+      <!-- Resume -->
+      <img src="assets/resume.png" class="resume" />
+    </div>
+    
+    <!-- +++++++++++++++++++++++++++++++++++ -->
+  </div>
+
+  <script>
+    // Optional interactivity
+    document.querySelectorAll('.clue').forEach(clue => {
+      clue.addEventListener('click', () => {
+        alert(`Open Project: ${clue.dataset.clue}`);
+      });
+    });
+
+    document.querySelector('.resume').addEventListener('click', () => {
+      alert("Go to Resume");
+    });
+
+
+  window.onload = function () {
+    const canvas = document.getElementById("stringCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Get clue elements and compute their center-top positions (as pins)
+    function getPinPosition(selector) {
+      const el = document.querySelector(selector);
+      const rect = el.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + 20 // adjust this as needed based on image design
+      };
+    }
+
+    const clue1Pin = getPinPosition(".clue1");
+    const clue2Pin = getPinPosition(".clue2");
+
+    // Draw a red string between clue 1 and 2
+    ctx.beginPath();
+    ctx.moveTo(clue1Pin.x, clue1Pin.y);
+    ctx.lineTo(clue2Pin.x, clue2Pin.y);
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  };
+
+  </script>
+</body>
+</html>
